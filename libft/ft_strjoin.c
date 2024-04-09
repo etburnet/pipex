@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 15:17:34 by eburnet           #+#    #+#             */
-/*   Updated: 2024/04/05 13:35:03 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/04/08 06:50:19 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	result = malloc(sizeof(char) * (lens1 + ft_strlen(s2) + 1));
 	if (result == NULL)
 		return (NULL);
-	
-	
+	while (*s1 != '\0')
 		result[i++] = *(s1++);
 	i = 0;
 	while (*s2 != '\0')
