@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:37:54 by eburnet           #+#    #+#             */
-/*   Updated: 2024/04/09 17:22:37 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/04/10 09:50:38 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	ft_execute(char *cmd, int fd1, int fd2)
 		ft_free_split(cmd_tab);
 		free(cmd_path);
 		close(fd1);
-		close(fd2);
+		close(fd2); 
 		return (0);
 	}
 	pid = fork();
