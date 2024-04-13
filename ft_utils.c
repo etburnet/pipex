@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:42:21 by eburnet           #+#    #+#             */
-/*   Updated: 2024/04/09 16:42:37 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/04/12 09:26:10 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,19 @@ int	ft_move_file(int fd1, int fd2)
 			return (1);
 	}
 	return (0);
+}
+
+int	ft_free_all(char ***cmd_tab, int *fd1, int *fd2, char *errror)
+{
+	ft_free_split(*cmd_tab);
+	close(*fd1);
+	close(*fd2);
+	perror(errror);
+	return (0);
+}
+
+void ft_close(int *fd1, int *fd2)
+{
+	close(*fd1);
+	close(*fd2);
 }

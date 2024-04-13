@@ -6,12 +6,12 @@
 #    By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 12:48:48 by eburnet           #+#    #+#              #
-#    Updated: 2024/04/09 17:28:20 by eburnet          ###   ########.fr        #
+#    Updated: 2024/04/11 11:39:07 by eburnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 SRCS = main.c ft_execute.c ft_utils.c
 OBJS = $(SRCS:.c=.o)
 HEADERS = pipex.h

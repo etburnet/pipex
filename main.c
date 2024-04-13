@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:16:21 by eburnet           #+#    #+#             */
-/*   Updated: 2024/04/10 11:19:50 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/04/12 15:47:21 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ int	main(int argc, char *argv[])
 			unlink(argv[argc - 1]);
 			return (0);
 		}
-		close(fd1);
-		close(fd2);
+		ft_close(&fd1, &fd2);
 		close(tempfd);
 		unlink("temp");
 		return (1);
@@ -74,3 +73,49 @@ int	main(int argc, char *argv[])
 	perror("There is less than 4 args");
 	return (0);
 }
+
+
+
+
+/* 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <errno.h>
+
+// Fonction d'exécution qui fork pour faire son travail
+void execute_commande(char *commande) {
+	pid_t pid = fork();
+	if (pid == -1) {
+		perror("fork");
+		exit(1);
+	} else if (pid == 0) { // Processus enfant
+		// Exécuter la commande
+		execlp(commande, commande, NULL);
+		// Si execlp retourne, une erreur s'est produite
+		perror("execlp");
+		exit(1);
+	}
+}
+
+int main(int argc, char *argv[]) {
+	int i;
+	int status;
+	pid_t pid;
+
+	i = 1;
+	while (argv[i])
+		execute_commande(argv[i]);
+
+	// Attendre la fin de tous les processus enfants
+	while ((pid = waitpid(-1, &status, 0)) != -1)
+	{
+		if (WIFEXITED(status))
+			printf("Le processus enfant %d s'est terminé avec le code de sortie %d\n", pid, WEXITSTATUS(status));
+		else
+			printf("Le processus enfant %d s'est terminé de manière anormale\n", pid);
+	}
+	return 0;
+}
+ */
