@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:22:10 by eburnet           #+#    #+#             */
-/*   Updated: 2024/04/12 09:26:20 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/04/17 18:08:53 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,15 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 
-int		ft_execute(char *cmd, int src_fd, int dst_fd);
-int		ft_move_file(int fd1, int fd2);
-void	ft_free_split(char	**tab);
-int	    ft_free_all(char ***cmd_tab, int *fd1, int *fd2, char *errror);
-void    ft_close(int *fd1, int *fd2);
+extern char		**environ;
+int				ft_execute(char **argv, int argc, int fd1, int fd2);
+int				ft_copy_file(int fd1, int fd2);
+void			ft_free_split(char	**tab);
+int				ft_free_all(char ***cmd_tab, int *fd1, int *fd2, char *error);
+void			ft_close(int *fd1, int *fd2);
+int				ft_unlink_return(int argc, char *argv[]);
+char			*ft_find_cmd(char **cmd_tab);
+char			*ft_right_path(char	**path, char *full_path, char **cmd_tab);
+char			**ft_search_path(void);
 
 #endif

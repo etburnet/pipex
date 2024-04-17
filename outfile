@@ -1,0 +1,16 @@
+Makefile
+a.out
+file1
+ft_execute.c
+ft_execute.o
+ft_search.c
+ft_search.o
+ft_utils.c
+ft_utils.o
+libft
+main.c
+main.o
+outfile
+pipex
+pipex.h
+tempfd
