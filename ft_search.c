@@ -6,13 +6,13 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:06:45 by eburnet           #+#    #+#             */
-/*   Updated: 2024/04/17 18:07:45 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/04/18 09:38:20 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	**ft_search_path(void)
+char	**ft_extract_PATH(void)
 {
 	char	*path;
 	char	*trimmed;
@@ -36,7 +36,7 @@ char	**ft_search_path(void)
 	return (splited);
 }
 
-char	*ft_right_path(char	**path, char *full_path, char **cmd_tab)
+char	*ft_cmd_path(char	**path, char *full_path, char **cmd_tab)
 {
 	int	i;
 
@@ -71,7 +71,7 @@ char	*ft_find_cmd(char **cmd_tab)
 	char	*full_path;
 
 	full_path = NULL;
-	path = ft_search_path();
+	path = ft_extract_PATH();
 	if (cmd_tab[0] == NULL || path == NULL)
 		return (NULL);
 	if (access(cmd_tab[0], X_OK) == 0)
@@ -87,7 +87,7 @@ char	*ft_find_cmd(char **cmd_tab)
 		ft_strlcat(full_path, cmd_tab[0], ft_strlen(cmd_tab[0]) + 1);
 		return (full_path);
 	}
-	full_path = ft_right_path(path, full_path, cmd_tab);
+	full_path = ft_cmd_path(path, full_path, cmd_tab);
 	ft_free_split(path);
 	return (full_path);
 }

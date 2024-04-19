@@ -6,13 +6,13 @@
 #    By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 12:48:48 by eburnet           #+#    #+#              #
-#    Updated: 2024/04/17 18:14:57 by eburnet          ###   ########.fr        #
+#    Updated: 2024/04/18 09:32:15 by eburnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 CFLAGS = -Wall -Wextra -Werror -g3
-SRCS = main.c ft_execute.c ft_utils.c ft_search.c
+SRCS = main.c ft_execute.c ft_utils.c ft_search.c ft_here_doc.c
 OBJS = $(SRCS:.c=.o)
 HEADERS = pipex.h
 LIBFT_PATH = ./libft

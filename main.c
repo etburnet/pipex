@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:16:21 by eburnet           #+#    #+#             */
-/*   Updated: 2024/04/17 16:55:18 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/04/19 10:26:48 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	main(int argc, char *argv[])
 	int	fd2;
 	int	tempfd;
 
-	/* if (argc == 6 && argv[1] == "here_doc")
-		return (ft_here_doc()); */
+	if (argc == 6 && (strcmp(argv[1], "here_doc") == 0))
+		return (ft_here_doc(argc, argv));
 	if (argc > 4)
 	{
 		if (ft_opens(&fd1, &tempfd, argv) == 0)

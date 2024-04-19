@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:37:54 by eburnet           #+#    #+#             */
-/*   Updated: 2024/04/17 18:40:32 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/04/19 10:20:06 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int	ft_execute_command(char *cmd_path, char **cmd_tab, int fd1, int fd2)
 	{
 		if (dup2(tmp_fd1, STDIN_FILENO) < 0 || dup2(tmp_fd2, STDOUT_FILENO) < 0)
 		{
-			perror("dup2");
-			exit(EXIT_FAILURE);
+			free(cmd_path);
+			return (ft_free_all(&cmd_tab, &fd1, &fd2, "dup2"));
 		}
 		ft_close(&tmp_fd1, &tmp_fd2);
 		execve(cmd_path, cmd_tab, NULL);
-		perror("execve");
-		exit(EXIT_FAILURE);
+		free(cmd_path);
+		return (ft_free_all(&cmd_tab, &fd1, &fd2, "execve"));
 	}
 	ft_close(&tmp_fd1, &tmp_fd2);
 	return (1);
