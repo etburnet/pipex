@@ -6,13 +6,13 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:06:45 by eburnet           #+#    #+#             */
-/*   Updated: 2024/04/18 09:38:20 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:32:27 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	**ft_extract_PATH(void)
+char	**ft_extract_path(void)
 {
 	char	*path;
 	char	*trimmed;
@@ -71,7 +71,7 @@ char	*ft_find_cmd(char **cmd_tab)
 	char	*full_path;
 
 	full_path = NULL;
-	path = ft_extract_PATH();
+	path = ft_extract_path();
 	if (cmd_tab[0] == NULL || path == NULL)
 		return (NULL);
 	if (access(cmd_tab[0], X_OK) == 0)
