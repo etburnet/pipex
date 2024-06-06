@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:06:45 by eburnet           #+#    #+#             */
-/*   Updated: 2024/05/03 14:32:27 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/05/30 10:47:27 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,16 @@ char	*ft_find_cmd(char **cmd_tab)
 
 	full_path = NULL;
 	path = ft_extract_path();
-	if (cmd_tab[0] == NULL || path == NULL)
+	if (cmd_tab[0] == NULL)
+		return (ft_free_split(path), NULL);
+	if (path == NULL)
 		return (NULL);
 	if (access(cmd_tab[0], X_OK) == 0)
 	{
 		ft_free_split(path);
 		full_path = malloc(sizeof(char) * ft_strlen(cmd_tab[0]) + 1);
 		if (full_path == NULL)
-		{
-			full_path = NULL;
 			return (full_path);
-		}
 		full_path[0] = '\0';
 		ft_strlcat(full_path, cmd_tab[0], ft_strlen(cmd_tab[0]) + 1);
 		return (full_path);
