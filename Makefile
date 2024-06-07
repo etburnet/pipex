@@ -6,7 +6,7 @@
 #    By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 12:48:48 by eburnet           #+#    #+#              #
-#    Updated: 2024/05/24 11:02:24 by eburnet          ###   ########.fr        #
+#    Updated: 2024/06/07 11:42:56 by eburnet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT_PATH = ./libft
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_PATH)/libft.a
-	cc $(CFLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -o $(NAME) -g3
+	cc $(CFLAGS) $(OBJS) -L$(LIBFT_PATH) -lft -o $(NAME)
 
 %.o: %.c $(HEADERS)
 	cc $(CFLAGS) -c $< -o $@

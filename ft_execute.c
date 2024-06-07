@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:37:54 by eburnet           #+#    #+#             */
-/*   Updated: 2024/05/30 10:59:25 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/07 14:29:46 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int	ft_forking(t_pipe_cmd pipe_cmd, int fd)
 
 int	ft_path(char *cmd, t_pipe_cmd pipe_cmd, int i)
 {
-	int		ret;
-	int		fd;
+	int	ret;
+	int	fd;
 
 	if (i == 1)
 		fd = pipe_cmd.fd_pipe[1];
@@ -60,27 +60,28 @@ int	ft_path(char *cmd, t_pipe_cmd pipe_cmd, int i)
 
 int	ft_execute(char **argv, int argc, t_pipe_cmd p)
 {
-	int		status;
+	int		i[2];
 	pid_t	pid;
-	int		i;
 
-	i = 1;
+	i[0] = 1;
 	pid = 0;
-	while (argv[i++] != NULL && i < argc - 2)
+	while (argv[i[0]++] != NULL && i[0] < argc - 2)
 	{
 		if (pipe(p.fd_pipe) == -1)
 			return (perror("pipe"), 1);
-		if (ft_path(argv[i], p, 1) == 1)
-			return (ft_close(p.fd_pipe[0], p.fd_pipe[1]), ft_putstr_fd("1st command not found\n", 2), 1);
+		if (ft_path(argv[i[0]], p, 1) == 1)
+			return (ft_close(p.fd_pipe[0], p.fd_pipe[1]),
+				ft_putstr_fd("1st cmd not found\n", 2), 1);
 		close(p.fd_pipe[1]);
 		p.fd1 = p.fd_pipe[0];
 	}
 	if (ft_path(argv[argc - 2], p, 0) == 1)
-		return (ft_close(p.fd_pipe[0], p.fd_pipe[1]), ft_putstr_fd("2nd command not found\n", 2), 1);
+		return (ft_close(p.fd_pipe[0], p.fd_pipe[1]),
+			ft_putstr_fd("2nd cmd not found\n", 2), 1);
 	while (pid != -1)
 	{
-		pid = waitpid(-1, &status, 0);
-		if (!WEXITSTATUS(status))
+		pid = waitpid(-1, &i[1], 0);
+		if (!WEXITSTATUS(i[1]))
 			return (ft_close(p.fd_pipe[0], p.fd_pipe[1]), close(p.fd2), 1);
 	}
 	return (ft_close(p.fd1, p.fd2), ft_close(p.fd_pipe[0], p.fd_pipe[1]), 0);

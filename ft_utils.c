@@ -6,17 +6,19 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:42:21 by eburnet           #+#    #+#             */
-/*   Updated: 2024/05/30 10:53:27 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/07 15:16:11 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_free_split(char	**tab)
+void	ft_free_split(char **tab)
 {
 	int	i;
 
 	i = 0;
+	if (!tab)
+		return ;
 	while (tab[i])
 		free (tab[i++]);
 	free (tab);
