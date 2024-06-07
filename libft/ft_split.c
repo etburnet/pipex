@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:30:20 by eburnet           #+#    #+#             */
-/*   Updated: 2023/11/09 18:01:51 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/07 17:23:57 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*ft_copy_word(char *s, char c)
 	return (word);
 }
 
-static void	ft_process_word(char const *s, char c, char **result, int *j)
+static int	ft_process_word(char const *s, char c, char **result, int *j)
 {
 	int	i;
 	int	in_word;
@@ -71,7 +71,7 @@ static void	ft_process_word(char const *s, char c, char **result, int *j)
 			{
 				result[(*j)++] = ft_copy_word((char *)(s + i), c);
 				if (!result[(*j) - 1])
-					return ;
+					return (-1);
 				in_word = 1;
 			}
 		}
@@ -79,6 +79,7 @@ static void	ft_process_word(char const *s, char c, char **result, int *j)
 			in_word = 0;
 		i++;
 	}
+	return (0);
 }
 
 char	**ft_split(char const *s, char c)
@@ -94,7 +95,8 @@ char	**ft_split(char const *s, char c)
 	result = malloc(sizeof(char *) * (word_count + 1));
 	if (!result)
 		return (NULL);
-	ft_process_word(s, c, result, &j);
+	if (ft_process_word(s, c, result, &j) == -1)
+		return (NULL);
 	result[word_count] = NULL;
 	return (result);
 }
