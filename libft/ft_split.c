@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:30:20 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/07 17:23:57 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/10 13:32:20 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,19 @@ static char	*ft_copy_word(char *s, char c)
 	return (word);
 }
 
+static void	ft_free_all(char **result)
+{
+	int	i;
+
+	i = 0;
+	while (result[i] != NULL)
+	{
+		free(result[i]);
+		i++;
+	}
+	free(result);
+}
+
 static int	ft_process_word(char const *s, char c, char **result, int *j)
 {
 	int	i;
@@ -69,9 +82,10 @@ static int	ft_process_word(char const *s, char c, char **result, int *j)
 		{
 			if (!in_word)
 			{
-				result[(*j)++] = ft_copy_word((char *)(s + i), c);
-				if (!result[(*j) - 1])
-					return (-1);
+				result[*j] = ft_copy_word((char *)(s + i), c);
+				if (!result[*j])
+					return (ft_free_all(result), -1);
+				(*j)++;
 				in_word = 1;
 			}
 		}

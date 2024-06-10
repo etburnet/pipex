@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:06:45 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/07 15:40:57 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/10 13:28:50 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@ char	**ft_extract_path(void)
 	int		i;
 
 	i = 0;
-	while (environ[i] != NULL)
+	while (environ[i++] != NULL)
 	{
 		if (ft_strncmp(environ[i], "PATH=", 5) == 0)
 			break ;
-		i++;
 	}
 	if (environ[i] == NULL)
 		return (NULL);
@@ -32,11 +31,13 @@ char	**ft_extract_path(void)
 	if (path == NULL)
 		return (NULL);
 	trimmed = ft_strtrim(path, "PATH=");
-	if (trimmed == NULL)
-		return (free(path), NULL);
-	splited = ft_split(trimmed, ':');
 	free(path);
+	if (trimmed == NULL)
+		return (NULL);
+	splited = ft_split(trimmed, ':');
 	free(trimmed);
+	if (splited == NULL)
+		return (NULL);
 	return (splited);
 }
 
@@ -62,6 +63,8 @@ char	*ft_cmd_path(char **path, char *full_path, char **cmd_tab)
 		full_path = NULL;
 		i++;
 	}
+	if (full_path == NULL)
+		ft_free_split(path);
 	return (full_path);
 }
 
@@ -71,6 +74,7 @@ char	*ft_find_cmd(char **cmd_tab)
 	char	*full_path;
 
 	full_path = NULL;
+	path = NULL;
 	path = ft_extract_path();
 	if (path == NULL)
 		return (NULL);
@@ -81,12 +85,14 @@ char	*ft_find_cmd(char **cmd_tab)
 		ft_free_split(path);
 		full_path = malloc(sizeof(char) * ft_strlen(cmd_tab[0]) + 1);
 		if (full_path == NULL)
-			return (full_path);
+			return (NULL);
 		full_path[0] = '\0';
 		ft_strlcat(full_path, cmd_tab[0], ft_strlen(cmd_tab[0]) + 1);
 		return (full_path);
 	}
 	full_path = ft_cmd_path(path, full_path, cmd_tab);
+	if (full_path == NULL)
+		return (NULL);
 	ft_free_split(path);
 	return (full_path);
 }
