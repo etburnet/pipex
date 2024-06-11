@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:37:54 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/10 16:32:08 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/11 19:37:08 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,19 @@ int	ft_execute(char **argv, int argc, t_pipe_cmd p)
 		if (pipe(p.fd_pipe) == -1)
 			return (perror("pipe"), 1);
 		if (ft_path(argv[i[0]], p, 1) == 1)
-				ft_putstr_fd("1st cmd not found\n", 2);
+			ft_putstr_fd("1st cmd not found\n", 2);
 		close(p.fd_pipe[1]);
 		p.fd1 = p.fd_pipe[0];
 	}
 	if (ft_path(argv[argc - 2], p, 0) == 1)
 		ft_putstr_fd("2nd cmd not found\n", 2);
+	ft_close(p.fd_pipe[0], p.fd_pipe[1]);
+	ft_close(p.fd2, p.fd1);
 	while (pid != -1)
 	{
 		pid = waitpid(-1, &i[1], 0);
-		if (!WEXITSTATUS(i[1]))
-			return (ft_close(p.fd_pipe[0], p.fd_pipe[1]), ft_close(p.fd2, p.fd1), 1);
+		if (!WIFEXITED(i[1]) || WEXITSTATUS(i[1]) != 0)
+			return (1);
 	}
-	return (ft_close(p.fd1, p.fd2), ft_close(p.fd_pipe[0], p.fd_pipe[1]), 0);
+	return (0);
 }
