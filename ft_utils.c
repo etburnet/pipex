@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:42:21 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/07 15:16:11 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/12 13:47:16 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	ft_free_all(char ***cmd_tab, char *error)
 
 void	ft_close(int fd1, int fd2)
 {
-	close(fd1);
-	close(fd2);
+	if (fd1 > 0)	
+		close(fd1);
+	if (fd2 > 0)
+		close(fd2);
 }
