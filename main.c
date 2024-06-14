@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:16:21 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/11 20:40:49 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/14 13:56:30 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,20 @@
 int	main(int argc, char *argv[])
 {
 	t_pipe_cmd	*pipe_cmd;
+	int			ret;
 
 	if (argc == 5)
 	{
 		pipe_cmd = malloc(sizeof(t_pipe_cmd));
 		if (!pipe_cmd)
-			return (0);
-		pipe_cmd->fd1 = open(argv[1], O_RDONLY);
-		if (pipe_cmd->fd1 < 0)
-		{
-			perror(argv[1]);
-			pipe_cmd->fd1 = open("/dev/null", O_RDONLY);
-		}
-		pipe_cmd->fd2 = open(argv[argc - 1],
-				O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (pipe_cmd->fd2 < 0)
-			return (close(pipe_cmd->fd1), free(pipe_cmd),
-				perror(argv[argc - 1]), 1);
-		if (ft_execute(argv, argc, *pipe_cmd) == 1)
-			return (ft_close(pipe_cmd->fd1, pipe_cmd->fd2), free(pipe_cmd), 1);
-		return (ft_close(pipe_cmd->fd1, pipe_cmd->fd2), free(pipe_cmd), 0);
+			return (1);
+		pipe_cmd->fd1 = -1;
+		pipe_cmd->fd2 = -1;
+		ret = ft_execute(argv, argc, *pipe_cmd);
+		ft_close(pipe_cmd->fd1, pipe_cmd->fd2);
+		free(pipe_cmd);
+		return (ret);
 	}
 	else
-		ft_putstr_fd("4 and only 4 args accepted", 2);
-	return (1);
+		return (ft_putstr_fd("4 and only 4 args accepted", 2), 1);
 }

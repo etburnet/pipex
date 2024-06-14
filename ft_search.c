@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:06:45 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/11 20:44:37 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/14 15:22:31 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**ft_extract_path(void)
 	char	**splited;
 	int		i;
 
-	i = 0;	
+	i = 0;
 	if (environ == NULL || environ[i] == NULL)
 		return (NULL);
 	while (environ[i++] != NULL)

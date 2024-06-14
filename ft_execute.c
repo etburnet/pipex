@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:37:54 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/11 20:30:35 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/14 15:39:29 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_forking(t_pipe_cmd pipe_cmd, int fd)
 
 	pid = fork();
 	if (pid == -1)
-		return (ft_free_all(&pipe_cmd.cmd_tab, "fork"));
+		return (perror("fork"), 1);
 	else if (pid == 0)
 	{
 		dup2(pipe_cmd.fd1, STDIN_FILENO);
@@ -29,6 +29,8 @@ int	ft_forking(t_pipe_cmd pipe_cmd, int fd)
 			close(pipe_cmd.fd_pipe[0]);
 			close(pipe_cmd.fd2);
 		}
+		close(pipe_cmd.fd_pipe[0]);
+		close(pipe_cmd.fd_pipe[1]);
 		execve(pipe_cmd.cmd_path, pipe_cmd.cmd_tab, NULL);
 		free(pipe_cmd.cmd_path);
 		return (ft_free_all(&pipe_cmd.cmd_tab, "execve"));
@@ -58,31 +60,60 @@ int	ft_path(char *cmd, t_pipe_cmd pipe_cmd, int i)
 	return (ret);
 }
 
+void	ft_is_file_ok(char **argv, int argc, t_pipe_cmd pipe_cmd, int i)
+{
+	if (i == 1)
+	{
+		pipe_cmd.fd1 = open(argv[1], O_RDONLY);
+		if (pipe_cmd.fd1 < 0)
+		{
+			perror(argv[1]);
+			return ;
+		}
+		if (ft_path(argv[2], pipe_cmd, i) == 1)
+		{
+			ft_putstr_fd("First command not found\n", 2);
+			close(pipe_cmd.fd1);
+		}
+	}
+	else if (i == 2)
+	{
+		pipe_cmd.fd2 = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (pipe_cmd.fd2 < 0)
+		{
+			perror(argv[argc - 1]);
+			return ;
+		}
+		if (ft_path(argv[argc - 2], pipe_cmd, i) == 1)
+			ft_putstr_fd("Last command not found\n", 2);
+	}
+}
+
 int	ft_execute(char **argv, int argc, t_pipe_cmd p)
 {
 	int		i[2];
 	pid_t	pid;
 
-	i[0] = 1;
+	i[0] = 2;
 	pid = 0;
+	if (pipe(p.fd_pipe) == -1)
+		return (perror("pipe"), 1);
+	ft_is_file_ok(argv, argc, p, 1);
+	close(p.fd_pipe[1]);
+	p.fd1 = p.fd_pipe[0];
 	while (argv[i[0]++] != NULL && i[0] < argc - 2)
 	{
-		if (pipe(p.fd_pipe) == -1)
-			return (perror("pipe"), 1);
 		if (ft_path(argv[i[0]], p, 1) == 1)
-			ft_putstr_fd("1st cmd not found\n", 2);
+			ft_putstr_fd("Command not found\n", 2);
 		close(p.fd_pipe[1]);
-		p.fd1 = p.fd_pipe[0];
 	}
-	if (ft_path(argv[argc - 2], p, 0) == 1)
-		ft_putstr_fd("2nd cmd not found\n", 2);
-	ft_close(p.fd_pipe[0], p.fd_pipe[1]);
+	ft_is_file_ok(argv, argc, p, 2);
 	ft_close(p.fd2, p.fd1);
 	while (pid != -1)
 	{
 		pid = waitpid(-1, &i[1], 0);
 		if (!WIFEXITED(i[1]) || WEXITSTATUS(i[1]) != 0)
-			return (1);
+			return (ft_close(p.fd_pipe[0], p.fd_pipe[1]), 1);
 	}
-	return (0);
+	return (ft_close(p.fd_pipe[0], p.fd_pipe[1]), 0);
 }
