@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:22:10 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/14 14:43:27 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/09/23 16:12:23 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 typedef struct s_pipe_cmd
 {
 	int				fd_pipe[2];
+	int				next_pipe[2];
 	int				fd1;
 	int				fd2;
 	char			*cmd_path;

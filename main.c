@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 09:16:21 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/14 13:56:30 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/09/23 17:03:33 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char *argv[])
 	t_pipe_cmd	*pipe_cmd;
 	int			ret;
 
-	if (argc == 5)
+	if (argc >= 5)
 	{
 		pipe_cmd = malloc(sizeof(t_pipe_cmd));
 		if (!pipe_cmd)
@@ -30,5 +30,5 @@ int	main(int argc, char *argv[])
 		return (ret);
 	}
 	else
-		return (ft_putstr_fd("4 and only 4 args accepted", 2), 1);
+		return (ft_putstr_fd("4 args Minimum", 2), 1);
 }

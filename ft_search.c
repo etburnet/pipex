@@ -6,7 +6,7 @@
 /*   By: eburnet <eburnet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 18:06:45 by eburnet           #+#    #+#             */
-/*   Updated: 2024/06/14 15:22:31 by eburnet          ###   ########.fr       */
+/*   Updated: 2024/06/14 16:42:24 by eburnet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**ft_extract_path(void)
 	i = 0;
 	if (environ == NULL || environ[i] == NULL)
 		return (NULL);
-	while (environ[i++] != NULL)
+	while (environ[++i] != NULL)
 		if (ft_strncmp(environ[i], "PATH=", 5) == 0)
 			break ;
 	if (environ[i] == NULL)
@@ -75,14 +75,10 @@ char	*ft_find_cmd(char **cmd_tab)
 
 	full_path = NULL;
 	path = NULL;
-	path = ft_extract_path();
-	if (path == NULL)
-		return (NULL);
 	if (cmd_tab[0] == NULL)
 		return (ft_free_split(path), NULL);
 	if (access(cmd_tab[0], X_OK) == 0)
 	{
-		ft_free_split(path);
 		full_path = malloc(sizeof(char) * ft_strlen(cmd_tab[0]) + 1);
 		if (full_path == NULL)
 			return (NULL);
@@ -90,6 +86,9 @@ char	*ft_find_cmd(char **cmd_tab)
 		ft_strlcat(full_path, cmd_tab[0], ft_strlen(cmd_tab[0]) + 1);
 		return (full_path);
 	}
+	path = ft_extract_path();
+	if (path == NULL)
+		return (NULL);
 	full_path = ft_cmd_path(path, full_path, cmd_tab);
 	if (full_path == NULL)
 		return (NULL);
